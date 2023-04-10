@@ -17,6 +17,9 @@ import model.Cliente;
 import model.Editora;
 import model.Livro;
 import model.VendaLivro;
+import services.ClienteServicos;
+import services.EditoraServicos;
+import services.ServicosFactory;
 import util.Validadores;
 
 /**
@@ -94,6 +97,7 @@ public class LivrariaPOO {
         String cnpj = null;
         String endereco;
         String telefone;
+        ClienteServicos clienteS = ServicosFactory.getClienteServicos();
 
         System.out.println("-- Cadastro de Cliente --");
         System.out.print("\nDigite o CPF do cliente: ");
@@ -112,7 +116,7 @@ public class LivrariaPOO {
                     break;
                 }
 
-            } else if (cadCliente.getClienteCPF(cpf) != null) {
+            } else if (clienteS.buscarClientebyCPF(cpf).getCpf() != null) {
                 System.out.println("\nCliente já cadastrado!");
             } else {
                 System.out.print("\nInforme o nome do cliente: ");
@@ -125,6 +129,7 @@ public class LivrariaPOO {
                 telefone = leia.nextLine();
                 idCliente = cadCliente.geraID();
                 Cliente cli = new Cliente(idCliente, nomeCliente, cpf, cnpj, endereco, telefone);
+                clienteS.cadCliente(cli);
                 cadCliente.addCliente(cli);
                 System.out.println("\nCliente cadastrado com sucesso!");
             }
@@ -161,6 +166,8 @@ public class LivrariaPOO {
                 if (opEditar < 1 || opEditar > 4) {
                     System.out.println("\nOpção inválida");
                 }
+                ClienteServicos clienteS = ServicosFactory.getClienteServicos();
+                clienteS.atualizarCliente(cli);
                 /*
                 switch (opEditar) {
                     case 1:
@@ -200,7 +207,8 @@ public class LivrariaPOO {
 
     public static void imprimirListaClientes() {
         System.out.println("-- Lista de Clientes --");
-        for (Cliente cli : cadCliente.getClientes()) {
+        ClienteServicos clienteS = ServicosFactory.getClienteServicos();
+        for (Cliente cli : clienteS.getClientes()) {
             System.out.println("\n---");
             System.out.println("Nome:\t" + cli.getNomeCliente());//\t faz tabulação
             System.out.println("CPF:\t" + cli.getCpf());
@@ -213,15 +221,18 @@ public class LivrariaPOO {
         System.out.println("-- Deletar Cliente --");
         System.out.print("\nDigite o CPF do cliente: ");
         String cpf = leia.next();
+        ClienteServicos clienteS = ServicosFactory.getClienteServicos();
         if (Validadores.isCPF(cpf)) {
-            Cliente cli = cadCliente.getClienteCPF(cpf);
-            if (cli != null) {
-                cadCliente.removeCliente(cli);
+            Cliente cli = clienteS.buscarClientebyCPF(cpf);
+            if (cli.getCpf() != null) {
+                //cadCliente.removeCliente(cli);
+
                 System.out.println("\nConfirmar deletar cliente? 1 - Sim | 2 - Não");
                 int opCliente = leiaNumInt();
                 if (opCliente == 1) {
+                    clienteS.deletarCliente(cpf);
                     System.out.println("\nCliente deletado com sucesso!");
-                }else if (opCliente == 2) {
+                } else if (opCliente == 2) {
                     System.out.println("\nUsuário cancelou remoção de cliente!");
                 }
             } else {
@@ -239,6 +250,7 @@ public class LivrariaPOO {
         String endereco;
         String telefone;
         String gerente;
+        EditoraServicos editoraS = ServicosFactory.getEditoraServicos();
 
         System.out.println("-- Registrar Editora --");
         System.out.print("\nDigite o CNPJ da editora: ");
@@ -256,7 +268,7 @@ public class LivrariaPOO {
                     System.out.println("\nRegistro cancelado pelo usuário!");
                     break;
                 }
-            } else if (cadEditora.getEditoraCNPJ(cnpj) != null) {
+            } else if (editoraS.buscarEditorabyCNPJ(cnpj).getCnpj() != null) {
                 System.out.println("\nEditora já cadastrada!");
             } else {
                 System.out.print("\nInforme o nome da editora: ");
@@ -271,6 +283,7 @@ public class LivrariaPOO {
                 gerente = leia.nextLine();
                 idEditora = cadEditora.geraID();
                 Editora ed = new Editora(idEditora, nomeEditora, cnpj, endereco, telefone, gerente);
+                editoraS.cadEditora(ed);
                 cadEditora.addEditora(ed);
                 System.out.println("\nEditora cadastrada com sucesso!");
             }
@@ -312,6 +325,8 @@ public class LivrariaPOO {
                 if (opEditar < 1 || opEditar > 5) {
                     System.out.print("\nOpção inválida\n");
                 }
+                EditoraServicos editoraS = ServicosFactory.getEditoraServicos();
+                editoraS.atualizarEditora(ed);
 
                 System.out.println("\nEditora:\n" + ed.toString());
             } else {
@@ -324,7 +339,8 @@ public class LivrariaPOO {
 
     private static void imprimirListaEditoras() {
         System.out.println("-- Lista de Editoras --");
-        for (Editora ed : cadEditora.getEditoras()) {
+        EditoraServicos editoraS = ServicosFactory.getEditoraServicos();
+        for (Editora ed : editoraS.getEditoras()) {
             System.out.println("\n---");
             System.out.println("Nome:    \t" + ed.getNomeEditora());
             System.out.println("CNPJ:    \t" + ed.getCnpj());
@@ -338,15 +354,18 @@ public class LivrariaPOO {
         System.out.println("-- Deletar Editora --");
         System.out.print("\nDigite o CNPJ da editora: ");
         String cnpj = leia.next();
+        EditoraServicos editoraS = ServicosFactory.getEditoraServicos();
         if (Validadores.isCNPJ(cnpj)) {
-            Editora ed = cadEditora.getEditoraCNPJ(cnpj);
-            if (ed != null) {
-                cadEditora.removeEditoras(ed);
+            Editora ed = editoraS.buscarEditorabyCNPJ(cnpj);
+            if (ed.getCnpj() != null) {
+                //cadEditora.removeEditoras(ed);
+
                 System.out.println("\nConfirmar deletar editora? 1 - Sim | 2 - Não");
                 int opEdit = leiaNumInt();
                 if (opEdit == 1) {
+                    editoraS.deletarEditora(cnpj);
                     System.out.println("\nEditora deletada com sucesso!");
-                }else if (opEdit == 2) {
+                } else if (opEdit == 2) {
                     System.out.println("\nUsuário cancelou remoção de editora!");
                 }
             } else {
@@ -467,7 +486,7 @@ public class LivrariaPOO {
             int opDelet = leiaNumInt();
             if (opDelet == 1) {
                 System.out.println("\nLivro: " + li.getTitulo() + " deletado!");
-            }else if (opDelet == 2) {
+            } else if (opDelet == 2) {
                 System.out.println("Usuário cancelou remoção de livro!");
             }
         } else {
@@ -511,7 +530,7 @@ public class LivrariaPOO {
                 livros.add(li);
                 cadLivro.atualizaEstoqueLivro(li.getIsbn());
                 subTotal += li.getPreco();
-            }else{
+            } else {
                 System.out.println("\n" + li.getTitulo() + " não tem mais estoque.");
             }
             System.out.println("\nDeseja comprar mais livros nesta venda? \n1 - sim | 2 -Não \nDigite sua opção: ");

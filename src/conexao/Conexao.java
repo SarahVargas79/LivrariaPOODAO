@@ -22,15 +22,15 @@ public class Conexao {
     //Cria uma constante com a senha do BD
     private static String pass = "";
     
-    public static Connection getConexao() {
-        //Imicia a conexão nula, ainda não estabelecida.
+    public static Connection getConexao() throws SQLException {
+        //Inicia a conexão nula, ainda não estabelecida.
         Connection c = null;
        //tenta estabelecer conexão
         try {
             c = DriverManager.getConnection(url, user, pass);
         } catch (SQLException e) {
             //caso haja erron na conexão do banco 
-            System.out.println("Erro ao conectar banco!\n" + e.getMessage());
+            throw new SQLException("Erro ao conectar banco!\n" + e.getMessage());
         }
         return c;
     }

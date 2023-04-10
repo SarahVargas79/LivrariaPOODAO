@@ -21,9 +21,10 @@ import model.Cliente;
 public class ClienteDAO {
 
     public void cadastrarClienteDAO(Cliente cVO) {
-        //busca conexão com o BD
-        Connection con = Conexao.getConexao();//abrindo conexão
+        
         try {
+            //busca conexão com o BD
+            Connection con = Conexao.getConexao();//abrindo conexão
             //cria espaço de trabalho SQL, é a área no Java onde vamo executar os sripts SQL.
             String sql;
             sql = "insert into clientes values (null, ?, ?, null, ?, ?)";//? paramêtros que está esperando para receber, null é o id.
@@ -40,12 +41,12 @@ public class ClienteDAO {
     }//fim cadastrar
     
     public ArrayList<Cliente> getClientesDAO() {
-        Connection con = Conexao.getConexao();
+        ArrayList<Cliente> clientes = new ArrayList<>();
         try {//Para tratar erros
+            Connection con = Conexao.getConexao();
             Statement stat = con.createStatement();
             String sql = "select * from clientes";//' para executar para o banco(mysql)
             ResultSet rs = stat.executeQuery(sql);//ResultSet estrutura no java, é um meio de campo entre o banco de dados e o java(aplicação).
-            ArrayList<Cliente> clientes = new ArrayList<>();
             while (rs.next()) {              
                 Cliente c = new Cliente();//objeto cliente
                 //lado do java |x| (lado do banco)
@@ -56,21 +57,21 @@ public class ClienteDAO {
                 c.setTelefone(rs.getString("telefone"));
                 clientes.add(c);
             }
-            return clientes;
         } catch (SQLException ex) {
             System.out.println("\nErro ao Listar!\n" + ex.getMessage());
         }
-        return null;
+        return clientes;
     }//fim do listar
     
     public Cliente getClienteByDoc(String cpf) {
-        Connection con = Conexao.getConexao();//estabelecendo conexão
-        Cliente c = null;
+        
+        Cliente c = new Cliente();
         try {
+            Connection con = Conexao.getConexao();//estabelecendo conexão
             String sql = "select * from clientes where cpf = ?";
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setString(1, cpf);
-            ResultSet rs = pst.executeQuery(sql);
+            ResultSet rs = pst.executeQuery();
             while (rs.next()) {              
                 //lado do java |x| (lado do banco)
                 c.setIdCliente(rs.getByte("idcliente"));
@@ -86,8 +87,9 @@ public class ClienteDAO {
     }
     
     public void deletarClienteDAO(String cpf) {
-        Connection con = Conexao.getConexao();
+        
         try {
+            Connection con = Conexao.getConexao();
             String sql = "delete from clientes where cpf = ?";
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setString(1, cpf);
@@ -98,8 +100,9 @@ public class ClienteDAO {
     }//fim deletarCliente
     
     public void atualizaClienteByDoc(Cliente cVO) {
-        Connection con = Conexao.getConexao();
+        
         try {
+            Connection con = Conexao.getConexao();
             String sql = "update clientes set nome = ?, endereco = ?, telefone = ? where cpf = ?";
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setString(1, cVO.getNomeCliente());
