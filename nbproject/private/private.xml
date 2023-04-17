@@ -3,11 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/182010049/Documents/NetBeansProjects/LivrariaPOO-BD/src/dao/ClienteDAO.java</file>
+            <file>file:/C:/Users/182010049/Documents/NetBeansProjects/LivrariaPOO-BD/src/dao/DAOFactory.java</file>
             <file>file:/C:/Users/182010049/Documents/NetBeansProjects/LivrariaPOO-BD/src/services/ServicosFactory.java</file>
+            <file>file:/C:/Users/182010049/Documents/NetBeansProjects/LivrariaPOO-BD/src/dao/VendaLivroDAO.java</file>
             <file>file:/C:/Users/182010049/Documents/NetBeansProjects/LivrariaPOO-BD/src/livrariapoo/LivrariaPOO.java</file>
-            <file>file:/C:/Users/182010049/Documents/NetBeansProjects/LivrariaPOO-BD/src/conexao/Conexao.java</file>
-            <file>file:/C:/Users/182010049/Documents/NetBeansProjects/LivrariaPOO-BD/src/services/ClienteServicos.java</file>
+            <file>file:/C:/Users/182010049/Documents/NetBeansProjects/LivrariaPOO-BD/src/services/VendaLivroServicos.java</file>
+            <file>file:/C:/Users/182010049/Documents/NetBeansProjects/LivrariaPOO-BD/src/util/Validadores.java</file>
+            <file>file:/C:/Users/182010049/Documents/NetBeansProjects/LivrariaPOO-BD/src/dao/LivroDAO.java</file>
         </group>
     </open-files>
 </project-private>

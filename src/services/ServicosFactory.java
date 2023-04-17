@@ -23,4 +23,16 @@ public class ServicosFactory {
         return eServicos;
     }
     
+    private static LivroServicos liServicos = new LivroServicos();
+    
+    public static LivroServicos getLivroServicos() {
+        return liServicos;
+    }
+    
+    private static VendaLivroServicos vlS = new VendaLivroServicos();
+    
+    public static VendaLivroServicos getVendaLivros() {
+        return vlS;
+    }
+    
 }
